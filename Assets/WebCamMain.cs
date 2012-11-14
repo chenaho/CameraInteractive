@@ -34,8 +34,8 @@ public class WebCamMain : MonoBehaviour {
 	void Start () {
 		devices  =WebCamTexture.devices;
 
-		Cam_width=400;		
-		Cam_height = 300;
+		Cam_width=300;		
+		Cam_height = 200;
 
 		bOnOffDisplay = true;
 		
@@ -58,9 +58,9 @@ public class WebCamMain : MonoBehaviour {
 		//Debug.Log(pixels[0]);
 		
 		// init the blocks		
-		for(int i =0 ; i < Cam_width/50 ; i++)
+		for(int i =0 ; i < Cam_width/10 ; i++)
 		{
-			for(int j =0 ; j < Cam_width/50 ; j++)
+			for(int j =0 ; j < Cam_width/10 ; j++)
 			{
 				GameObject newObj = (GameObject)Instantiate( PixelCubePrefab, new Vector3(  i*0.5f, j*0.5f,0f),Quaternion.identity); 
 				newObj.name = "Pixel_"+i+"_"+j;
@@ -73,28 +73,30 @@ public class WebCamMain : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		for( int i = ShowContentTexture.texture.width -1 ; i >=0; i--)
-		{
-			for( int j = ShowContentTexture.texture.height -1 ; j >=0; j--)	
-			{
-				//ShowContentTexture.guiTexture.texture
-			}
-			
-		}
+ 
 		
-		
-		for(int i =0 ; i < Cam_width/50 ; i++)
+		int nCount =0;
+		for(int i =0 ; i < Cam_width ; i+=10)	
 		{
-			for(int j =0 ; j < Cam_width/50 ; j++)
+			for(int j =0 ; j < Cam_width; j+=10)
 			{
 				//Debug.Log(pixels[ i + Cam_width*j]);
 				 //  pixels[ i + Cam_width*j];
 				//Debug.Log("pxl="+frontTex.GetPixel(i,j));
-				Transform obj =  root_PixelCube.GetChild( i + Cam_width/50 *j)  ;
 				
-				obj.gameObject.renderer.material.color= frontTex.GetPixel(i,j);
+				Transform obj =  root_PixelCube.GetChild(    i/10 + (Cam_width *j)/10/10   ) ;
+				
+				//Debug.Log( "count("+i+","+j+")="+(i/10 + Cam_width/10 *j) );
+				
+				if(obj)
+				{
+					obj.gameObject.renderer.material.color=   frontTex.GetPixel(i ,j)  ;
+				
+				//float GrayScaleColor =  (frontTex.GetPixel(i,j).r + frontTex.GetPixel(i,j).g + frontTex.GetPixel(i,j).b )  /3;
+				//obj.gameObject.renderer.material.color=   new Color(GrayScaleColor,GrayScaleColor,GrayScaleColor,1) ;				
 				//obj.position = new Vector3(obj.position.x,obj.position.y,    (float)obj.gameObject.renderer.material.color.r );
-				obj.position = new Vector3(obj.position.x,obj.position.y,    (float)frontTex.GetPixel(i,j).r*2 );
+					obj.position = new Vector3(obj.position.x,obj.position.y,    (float)frontTex.GetPixel(i,j).r*2 );
+				}
 			}
 		}		
 		
