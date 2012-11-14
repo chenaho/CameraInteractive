@@ -78,7 +78,6 @@ public class WebCamMain : MonoBehaviour {
 			for( int j = ShowContentTexture.texture.height -1 ; j >=0; j--)	
 			{
 				//ShowContentTexture.guiTexture.texture
-				
 			}
 			
 		}
